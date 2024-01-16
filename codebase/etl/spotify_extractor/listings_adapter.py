@@ -1,11 +1,14 @@
-from spotify_extractor.spotify_client import client
 from datetime import date
+
 import pandas as pd
+from spotify_extractor.spotify_client import build_client
 
 
 def get_playlist_tracks(playlist_id):
+    client = build_client()
     playlist = client.playlist_items(playlist_id)
     tracks = playlist['items']
+    
     return tracks
 
 def extract_tracks_info(tracks, playlist_id):
@@ -26,7 +29,5 @@ def write_to_csv(tracks):
     tracks_df = pd.DataFrame(tracks)
     data_path = "./data/track_listings.csv"
     tracks_df.to_csv(data_path)
-
-# def run():
     
     
